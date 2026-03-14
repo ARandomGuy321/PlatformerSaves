@@ -11,7 +11,7 @@
 	"name": "PlatformerSaves",
 	"developer": "Sabe",
 	"description": "Save and load your progress in platformer levels!",
-	"repository": "https://github.com/0x5abe/PlatformerSaves",
+	"repository": "https://github.com/ARandomGuy321/PlatformerSaves",
 	"resources": {
 		"sprites": [
 			"resources/saveButton.png"
