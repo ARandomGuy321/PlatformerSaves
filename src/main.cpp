@@ -16,7 +16,7 @@ void setupKeybinds() {
         "save-game"_spr,
         "Save game",
         "Hotkey for quick saving",
-        { Keybind::create(KEY_K, Modifier::None) },
+        { Keybind::create(KEY_K) },
         "Play",  // category - required in Geode 5.x
     });
 }
