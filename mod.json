@@ -22,16 +22,6 @@
 		"gameplay"
 	],
 	"dependencies": {
-		"geode.custom-keybinds": {
-			"version": ">=v2.1.0",
-			"platforms": [
-				"win",
-				"android",
-				"mac-intel",
-                "mac-arm"
-			],
-			"importance": "required"
-		},
 		"geode.node-ids": {
 			"version": ">=v1.12.0-beta.4",
 			"importance": "required"
