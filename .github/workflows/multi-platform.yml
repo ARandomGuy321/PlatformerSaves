@@ -62,21 +62,6 @@ jobs:
           7z x './Build Output/sabe.persistenceapi.geode' '-o./build/geode-deps/sabe.persistenceapi'
           echo '{ "required": true }' > build/geode-deps/sabe.persistenceapi/geode-dep-options.json
 
-      - name: Fetch custom-keybinds headers
-        shell: bash
-        run: |
-          git clone --depth 1 --branch v2.1.0 \
-            https://github.com/geode-sdk/CustomKeybinds.git \
-            custom-keybinds-src
-
-          mkdir -p build/geode-deps/geode.custom-keybinds
-
-          cp -r custom-keybinds-src/include \
-            build/geode-deps/geode.custom-keybinds/include
-
-          echo '{ "required": true }' > \
-            build/geode-deps/geode.custom-keybinds/geode-dep-options.json
-    
       - name: Build the mod
         uses: geode-sdk/build-geode-mod@main
         with:
