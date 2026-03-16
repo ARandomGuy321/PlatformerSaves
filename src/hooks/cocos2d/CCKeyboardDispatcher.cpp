@@ -1,6 +1,7 @@
 #include "CCKeyboardDispatcher.hpp"
 #include "Geode/cocos/robtop/keyboard_dispatcher/CCKeyboardDispatcher.h"
 #include <hooks/PlayLayer.hpp>
+#include <hooks/PauseLayer.hpp>
 
 using namespace geode::prelude;
 using namespace persistenceAPI;
