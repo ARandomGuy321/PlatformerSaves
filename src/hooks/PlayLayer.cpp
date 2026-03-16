@@ -63,9 +63,6 @@ bool PSPlayLayer::init(GJGameLevel* i_level, bool i_useReplay, bool i_dontCreate
     if (m_fields->m_signalForAsyncLoad) {
         m_loadingProgress = 0.0f;
     }
-    #if !defined(GEODE_IS_IOS)
-    setupKeybinds();
-    #endif
     setupSavingProgressCircleSprite();
     setupSavingSuccessSprite();
 
@@ -268,25 +265,6 @@ std::string PSPlayLayer::getSaveFilePath(int i_slot, bool i_checkExists) {
 bool PSPlayLayer::validSaveExists() {
     return util::filesystem::validSaveExists(m_level);
 }
-
-#if !defined(GEODE_IS_IOS)
-void PSPlayLayer::setupKeybinds() {
-    addEventListener<keybinds::InvokeBindFilter>(
-        [this](keybinds::InvokeBindEvent* event) {
-            if (event->isDown() && canSave() && startSaveGame()) {
-                PSPauseLayer* l_pauseLayer = static_cast<PSPauseLayer*>(CCScene::get()->getChildByID("PauseLayer"));
-                if (l_pauseLayer) {
-                    if (l_pauseLayer->m_fields->m_saveCheckpointsSprite != nullptr) l_pauseLayer->m_fields->m_saveCheckpointsSprite->setColor({127,127,127});
-                    if (l_pauseLayer->m_fields->m_saveCheckpointsSprite != nullptr && l_pauseLayer->m_fields->m_saveCheckpointsSprite->getChildren()->count() > 0) static_cast<CCSprite*>(l_pauseLayer->m_fields->m_saveCheckpointsSprite->getChildren()->objectAtIndex(0))->setColor({127,127,127});
-                    if (l_pauseLayer->m_fields->m_saveCheckpointsButton != nullptr) l_pauseLayer->m_fields->m_saveCheckpointsButton->m_bEnabled = false;
-                }
-            }
-            return ListenerResult::Propagate;
-        },
-        "save-game"_spr
-    );
-}
-#endif
 
 void PSPlayLayer::setupSavingProgressCircleSprite() {
     CCSize l_winSize = CCDirector::sharedDirector()->getWinSize();
