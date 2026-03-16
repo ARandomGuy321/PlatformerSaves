@@ -68,7 +68,7 @@ void PSPlayLayer::saveGame() {
                 break;
             }
 
-            int l_PAVersion = 2;
+            int l_PAVersion = 3;
             if (m_fields->m_readPSFVersion > 0 && m_fields->m_readPSFVersion < 10) {
                 l_PAVersion = 1;
             }
