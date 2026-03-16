@@ -16,5 +16,5 @@ public:
     $override
     void removeDelegate(cocos2d::CCKeyboardDelegate* i_delegate);
     $override
-    bool dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool down, bool isArrowKey);
+    bool dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool down, bool isArrowKey, double unk);
 };
