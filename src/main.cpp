@@ -5,19 +5,7 @@
 using namespace geode::prelude;
 using namespace persistenceAPI;
 
-void setupKeybinds();
-
 $on_mod(Loaded) {
-    setupKeybinds();
 }
 
-void setupKeybinds() {
-    BindManager::get()->registerBindable({
-        "save-game"_spr,
-        "Save game",
-        "Hotkey for quick saving",
-        { Keybind::create(KEY_K, Modifier::None) },
-        "Play",  // category - required in Geode 5.x
-    });
-}
 #endif
