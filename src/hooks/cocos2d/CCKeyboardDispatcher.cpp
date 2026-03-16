@@ -19,13 +19,13 @@ void PSCCKeyboardDispatcher::removeDelegate(cocos2d::CCKeyboardDelegate* i_deleg
     CCKeyboardDispatcher::removeDelegate(i_delegate);
 }
 
-bool PSCCKeyboardDispatcher::dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool down, bool isArrowKey) {
+bool PSCCKeyboardDispatcher::dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool down, bool isArrowKey, double unk) {
     if (down) {
         auto* pl = PlayLayer::get();
         if (pl) {
             auto* ppl = static_cast<PSPlayLayer*>(pl);
-            auto keybind = Mod::get()->getSettingValue<keybinds::Keybind>("save-keybind");
-            if (keybind.key == key && ppl->canSave() && ppl->startSaveGame()) {
+            auto keyStr = Mod::get()->getSettingValue<std::string>("save-keybind");
+            if (keyStr.size() == 1 && key == (cocos2d::enumKeyCodes)toupper(keyStr[0]) && ppl->canSave() && ppl->startSaveGame()) {
                 PSPauseLayer* l_pauseLayer = static_cast<PSPauseLayer*>(CCScene::get()->getChildByID("PauseLayer"));
                 if (l_pauseLayer) {
                     if (l_pauseLayer->m_fields->m_saveCheckpointsSprite != nullptr)
@@ -39,5 +39,5 @@ bool PSCCKeyboardDispatcher::dispatchKeyboardMSG(cocos2d::enumKeyCodes key, bool
             }
         }
     }
-    return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, isArrowKey);
+    return CCKeyboardDispatcher::dispatchKeyboardMSG(key, down, isArrowKey, unk);
 }
