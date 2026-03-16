@@ -75,11 +75,10 @@
 			"default": "Z"
 		}
 	},
-	"incompatibilities": [
-		{
-			"id": "thesillydoggo.moretags",
-			"importance": "breaking",
+	"incompatibilities": {
+    	"thesillydoggo.moretags": {
+			"importance": "breaking",   
 			"version": "*"
-		}
-	]
+    }
+  }
 }
