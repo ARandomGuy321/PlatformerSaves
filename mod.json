@@ -69,12 +69,10 @@
 			"type": "bool"
 		},
 		"save-keybind": {  
-			"type": "keybind",    
+			"type": "string",    
 			"name": "Save progress",  
 			"description": "Press this key to manually save your progress.",  
-			"default": {      
-				"key": "K",   
-				"modifiers": []
+			"default": "Z"
     },
     "category": "gameplay"
 }
