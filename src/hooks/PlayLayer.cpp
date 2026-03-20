@@ -153,16 +153,6 @@ void PSPlayLayer::postUpdate(float i_unkFloat) {
     m_fields->m_inPostUpdate = true;
     m_fields->m_triedPlacingCheckpoint = m_tryPlaceCheckpoint;
 
-        // ===== TEMP HOOK LOG =====
-    log::info("[TEMP HOOK] pre-PlayLayer::postUpdate: m_tryPlaceCheckpoint={}", m_tryPlaceCheckpoint);
-    // =========================
-
-    PlayLayer::postUpdate(i_unkFloat);
-
-    // ===== TEMP HOOK LOG =====
-    log::info("[TEMP HOOK] post-PlayLayer::postUpdate: m_triedPlacingCheckpoint={}", m_fields->m_triedPlacingCheckpoint);
-    // =========================
-
     if (m_fields->m_updateExtraData) {
         m_fields->m_updateExtraData = false;
         m_effectManager->m_persistentTimerItemSet = m_fields->m_loadedPersistentTimerItemSet;
@@ -173,16 +163,8 @@ void PSPlayLayer::postUpdate(float i_unkFloat) {
     m_fields->m_triedPlacingCheckpoint = false;
 }
 
-CheckpointObject* PSPlayLayer::markCheckpoint() {
-     log::info("[HOOK] markCheckpoint called, m_triedPlacingCheckpoint={}", m_fields->m_triedPlacingCheckpoint);
+CheckpointObject* PSPlayLayer::markCheckpoint();
     PSCheckpointObject* l_checkpointObject = static_cast<PSCheckpointObject*>(PlayLayer::markCheckpoint());
-    log::info("checkpoint object: {}", l_checkpointObject != nullptr);
-log::info("savesEnabled: {}", savesEnabled());
-log::info("inPostUpdate: {}", m_fields->m_inPostUpdate);
-log::info("not practice mode: {}", !m_isPracticeMode);
-log::info("triedPlacingCheckpoint: {}", m_fields->m_triedPlacingCheckpoint);
-log::info("activatedCheckpoint: {}", m_activatedCheckpoint != nullptr);
-
 
     if (l_checkpointObject && savesEnabled() && m_fields->m_inPostUpdate && !m_isPracticeMode) {
         if (m_fields->m_triedPlacingCheckpoint) {
@@ -198,6 +180,7 @@ log::info("activatedCheckpoint: {}", m_activatedCheckpoint != nullptr);
                 //log::info("[markCheckpoint] autosave triggered");
                 startSaveGame();
             }
+            m_activatedCheckpoint = nullptr;
         }
     }
 
