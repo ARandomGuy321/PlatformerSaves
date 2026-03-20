@@ -164,7 +164,7 @@ CheckpointObject* PSPlayLayer::markCheckpoint() {
         return l_checkpointObject;
 
     if (m_activatedCheckpoint == nullptr) {
-        m_activatedCheckpoint = static_cast<CheckpointGameObject*>(l_checkpointObject);
+        m_activatedCheckpoint = l_checkpointObject;
     }
 
     l_checkpointObject->m_fields->m_timePlayed = m_timePlayed;
