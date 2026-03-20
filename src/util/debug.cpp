@@ -14,15 +14,24 @@ void readSeparator(std::string o_string, Stream& i_stream) {
 
 
 
-$execute {
+#include <Geode/Geode.hpp>
+using namespace geode::prelude;
+
+static void (*orig_tryPlace)(long long);
+
+void hook_tryPlace(long long self) {
+    log::info("[HOOK] BEFORE tryPlaceCheckpoint");
+
+    orig_tryPlace(self);
+
+    log::info("[HOOK] AFTER tryPlaceCheckpoint");
+}
+
+$on_mod(Loaded) {
     auto base = geode::base::get();
-    auto addr = base + 0x3a32d0; // tryPlaceCheckpoint function
+    auto addr = base + 0x3a32d0;
 
-    geode::hook::create((void*)addr, +[](long long self) {
-        auto original = (void(*)(long long)) geode::hook::getOriginal();
+    orig_tryPlace = (void(*)(long long))addr;
 
-        log::info("[HOOK] tryPlaceCheckpoint BEFORE original");
-        original(self);
-        log::info("[HOOK] tryPlaceCheckpoint AFTER original");
-    });
+    geode::hook::create((void*)addr, (void*)&hook_tryPlace);
 }
