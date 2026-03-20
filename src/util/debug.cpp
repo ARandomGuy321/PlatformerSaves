@@ -13,7 +13,6 @@ void readSeparator(std::string o_string, Stream& i_stream) {
 #endif
 
 
-
 #include <Geode/Geode.hpp>
 using namespace geode::prelude;
 
@@ -31,7 +30,7 @@ $on_mod(Loaded) {
     auto base = geode::base::get();
     auto addr = base + 0x3a32d0;
 
-    orig_tryPlace = (void(*)(long long))addr;
+    orig_tryPlace = reinterpret_cast<void(*)(long long)>(addr);
 
-    geode::hook::create((void*)addr, (void*)&hook_tryPlace);
+    Mod::get()->hook(reinterpret_cast<void*>(addr), reinterpret_cast<void*>(&hook_tryPlace));
 }
