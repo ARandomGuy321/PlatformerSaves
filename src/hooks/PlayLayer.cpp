@@ -174,6 +174,7 @@ void PSPlayLayer::postUpdate(float i_unkFloat) {
 }
 
 CheckpointObject* PSPlayLayer::markCheckpoint() {
+     log::info("[HOOK] markCheckpoint called, m_triedPlacingCheckpoint={}", m_fields->m_triedPlacingCheckpoint);
     PSCheckpointObject* l_checkpointObject = static_cast<PSCheckpointObject*>(PlayLayer::markCheckpoint());
     log::info("checkpoint object: {}", l_checkpointObject != nullptr);
 log::info("savesEnabled: {}", savesEnabled());
