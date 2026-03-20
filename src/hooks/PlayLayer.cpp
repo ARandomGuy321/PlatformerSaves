@@ -153,7 +153,15 @@ void PSPlayLayer::postUpdate(float i_unkFloat) {
     m_fields->m_inPostUpdate = true;
     m_fields->m_triedPlacingCheckpoint = m_tryPlaceCheckpoint;
 
+        // ===== TEMP HOOK LOG =====
+    log::info("[TEMP HOOK] pre-PlayLayer::postUpdate: m_tryPlaceCheckpoint={}", m_tryPlaceCheckpoint);
+    // =========================
+
     PlayLayer::postUpdate(i_unkFloat);
+
+    // ===== TEMP HOOK LOG =====
+    log::info("[TEMP HOOK] post-PlayLayer::postUpdate: m_triedPlacingCheckpoint={}", m_fields->m_triedPlacingCheckpoint);
+    // =========================
 
     if (m_fields->m_updateExtraData) {
         m_fields->m_updateExtraData = false;
