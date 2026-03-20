@@ -157,22 +157,30 @@ void PSPlayLayer::postUpdate(float i_unkFloat) {
     }
 }
 
-CheckpointObject* PSPlayLayer::markCheckpoint(){
+CheckpointObject* PSPlayLayer::markCheckpoint() {
     PSCheckpointObject* l_checkpointObject = static_cast<PSCheckpointObject*>(PlayLayer::markCheckpoint());
 
-    if (l_checkpointObject && savesEnabled()  && !m_isPracticeMode && m_activatedCheckpoint != nullptr) {
-        //log::info("[markCheckpoint] triggered checkpoint");
-            l_checkpointObject->m_fields->m_timePlayed = m_timePlayed;
-            l_checkpointObject->m_fields->m_timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-            m_fields->m_normalModeCheckpoints->addObject(l_checkpointObject);
-            m_fields->m_activatedCheckpoints.push_back(CheckpointGameObjectReference(m_activatedCheckpoint));
-            // autosave
-            if (Mod::get()->getSettingValue<bool>("auto-save")) {
-                //log::info("[markCheckpoint] autosave triggered");
-                startSaveGame();
-            }
-            m_activatedCheckpoint = nullptr;
+    if (!l_checkpointObject || !savesEnabled() || m_isPracticeMode)
+        return l_checkpointObject;
+
+    if (m_activatedCheckpoint == nullptr) {
+        m_activatedCheckpoint = l_checkpointObject;
     }
+
+    l_checkpointObject->m_fields->m_timePlayed = m_timePlayed;
+    l_checkpointObject->m_fields->m_timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch()
+    ).count();
+
+    m_fields->m_normalModeCheckpoints->addObject(l_checkpointObject);
+    m_fields->m_activatedCheckpoints.push_back(CheckpointGameObjectReference(m_activatedCheckpoint));
+
+    if (Mod::get()->getSettingValue<bool>("auto-save")) {
+        startSaveGame();
+    }
+
+    m_activatedCheckpoint = nullptr;
+
     return l_checkpointObject;
 }
 
