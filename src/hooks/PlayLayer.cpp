@@ -150,26 +150,18 @@ void PSPlayLayer::setupHasCompleted() {
 }
 
 void PSPlayLayer::postUpdate(float i_unkFloat) {
-    m_fields->m_inPostUpdate = true;
-    m_fields->m_triedPlacingCheckpoint = m_tryPlaceCheckpoint;
-
     if (m_fields->m_updateExtraData) {
         m_fields->m_updateExtraData = false;
         m_effectManager->m_persistentTimerItemSet = m_fields->m_loadedPersistentTimerItemSet;
         m_attempts = m_fields->m_loadedAttempts;
     }
-
-    m_fields->m_inPostUpdate = false;
-    m_fields->m_triedPlacingCheckpoint = false;
 }
 
-CheckpointObject* PSPlayLayer::markCheckpoint();
+CheckpointObject* PSPlayLayer::markCheckpoint(){
     PSCheckpointObject* l_checkpointObject = static_cast<PSCheckpointObject*>(PlayLayer::markCheckpoint());
 
-    if (l_checkpointObject && savesEnabled() && m_fields->m_inPostUpdate && !m_isPracticeMode) {
-        if (m_fields->m_triedPlacingCheckpoint) {
-            m_fields->m_triedPlacingCheckpoint = false;
-        } else if (m_activatedCheckpoint != nullptr) {
+    if (l_checkpointObject && savesEnabled()  && !m_isPracticeMode) {
+        if (m_activatedCheckpoint != nullptr) {
             //log::info("[markCheckpoint] triggered checkpoint");
             l_checkpointObject->m_fields->m_timePlayed = m_timePlayed;
             l_checkpointObject->m_fields->m_timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
